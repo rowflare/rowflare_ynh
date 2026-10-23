@@ -1,0 +1,1 @@
+Rowflare is ready at <https://__DOMAIN__/>. Sign in with the email address of the YunoHost user `__ADMIN__` and the password you chose during the install. Invite other people from Rowflare's workspace settings.
