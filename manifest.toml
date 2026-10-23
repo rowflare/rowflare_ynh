@@ -1,0 +1,76 @@
+#:schema https://raw.githubusercontent.com/YunoHost/apps/main/schemas/manifest.v2.schema.json
+
+packaging_format = 2
+
+id = "rowflare"
+name = "Rowflare"
+description.en = "Airtable-style database with grid, kanban, calendar and form views, automations and an API"
+
+version = "0.1.0~ynh1"
+
+maintainers = ["rowflare"]
+
+[upstream]
+license = "AGPL-3.0-only"
+website = "https://rowflare.com"
+admindoc = "https://rowflare.com/docs/self-hosting/"
+userdoc = "https://rowflare.com/docs/"
+code = "https://github.com/rowflare/rowflare"
+
+[integration]
+yunohost = ">= 12.1.17"
+helpers_version = "2.1"
+# workerd (the Workers runtime) only ships Linux binaries for x86_64 and arm64
+architectures = ["amd64", "arm64"]
+multi_instance = true
+
+ldap = false
+sso = false
+
+disk = "1500M"
+ram.build = "2G"
+ram.runtime = "300M"
+
+[install]
+    [install.domain]
+    type = "domain"
+
+    [install.init_main_permission]
+    type = "group"
+    default = "visitors"
+
+    [install.admin]
+    type = "user"
+
+    [install.password]
+    help.en = "Password of the Rowflare owner account (at least 8 characters). It is not linked to the YunoHost password."
+    type = "password"
+
+[resources]
+    [resources.sources.main]
+    url = "https://github.com/rowflare/rowflare/archive/refs/tags/v0.1.0.tar.gz"
+    sha256 = "1bce555c5352d45e3181b3b6eb6a789115a49fecc26b5fd23f0e8059e5a35a11"
+
+    autoupdate.strategy = "latest_github_tag"
+
+    [resources.system_user]
+
+    [resources.install_dir]
+
+    [resources.data_dir]
+
+    [resources.permissions]
+    main.url = "/"
+    main.auth_header = false
+
+    # REST API, webhooks, public forms and the MCP endpoint use their own tokens
+    api.url = "/api"
+    api.additional_urls = ["/mcp"]
+    api.show_tile = false
+    api.allowed = "visitors"
+    api.auth_header = false
+
+    [resources.ports]
+
+    [resources.nodejs]
+    version = "22"
